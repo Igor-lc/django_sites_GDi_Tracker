@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+{% load thumbnail %}
+
+{% block application %}
+    <h1>Список трекеров</h1>
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Поиск</button>
+    </form>
+    {% for tracker in trackers %}
+        <div>
+            <h2><a href="{% url 'tracker' tracker_id=tracker.id %}">{{ tracker.name }}</a></h2>
+            <div>{{ tracker.price }}</div>
+            <div>{{ tracker.description }}</div>
+
+            {% thumbnail tracker.photo "325x200" crop="center" as im %}
+                <img src="{{ im.url }}" alt="Трекер {{ tracker.name }}">
+            {% endthumbnail %}
+
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% load thumbnail %}
+
+{% block application %}
+<a href="{% url 'tracker' %}">Главная</a>
+
+    <div>
+        <h1>{{ tracker.name }}</h1>
+        <div>{{ tracker.price }}</div>
+        <div>{{ tracker.description }}</div>
+
+        {% thumbnail tracker.photo "650x400" crop="center" as im %}
+            <img src="{{ im.url }}" alt="Трекер {{ tracker.name }}">
+        {% endthumbnail %}
+
+    </div>
+
+    <h2>Заявка</h2>
+    {% if sent %}
+        <p>Спасибо! Ваша заявка принята.</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить заявку</button>
+    </form>
+{% endblock %}
+
+<h2>Отзывы</h2> - не выводится, тк расположен не верно
